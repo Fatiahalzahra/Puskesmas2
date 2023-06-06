@@ -27,7 +27,7 @@
 
                     <div class="form-group mt-3">
                         <label for="spesialis">Spesialis</label>
-                        <input type="text" class="form-control" name="nama" placeholder="Masukkan spesialis dokter" value="">
+                        <input type="text" class="form-control" name="spesialis" placeholder="Masukkan spesialis dokter" value="">
                     </div>
 
                     <div class="form-group mt-3">
