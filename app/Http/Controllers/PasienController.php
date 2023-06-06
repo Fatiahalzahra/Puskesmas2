@@ -68,7 +68,7 @@ public function update($id, Request $request){
     $pasien->update($validatedData);
 
     //Kembalikan ke halaman pasien
-    return redirect('/pasien')->with('succes', 'Data pasien berhasil diubah.');
+    return redirect('/pasien')->with('success', 'Data pasien berhasil diubah.');
 
 }
 
@@ -77,7 +77,7 @@ public function destroy(Request $request){
     Pasien::destroy($request->id);
 
     //Kembalikan ke daftar pasien
-    return redirect('pasien') ->with('secces', 'Data pasien berhasil di hapus');
+    return redirect('pasien') ->with('success', 'Data pasien berhasil di hapus');
 }
     
 }
