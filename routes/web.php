@@ -40,13 +40,22 @@ Route::delete('pasien', [PasienController::class, 'destroy']);
 
 
 
-// Route untuk menampilkan daftar pasien
+// Route untuk menampilkan daftar dokter
 Route::get('/dokter', [DokterController::class, 'index']);
 
-//Route untuk menampilkan tambah pasien
+//Route untuk menampilkan tambah dokter
 Route::get('/dokter/create',[DokterController::class, 'create']);
 
-//Route untuk memproses form tambah pasien
+//Route untuk memproses form tambah dokter
 Route::post('/dokter', [DokterController::class, 'store']);
+
+//Route untuk menampilkan form edit dokter
+Route::get('/dokter/edit/{id}',[DokterController::class,'edit']);
+
+//Rote untuk memproses form edit dokter
+Route::put('/dokter/{id}',[DokterController::class, 'update']);
+
+//Route untuk hapus dokter
+Route::delete('dokter', [DokterController::class, 'destroy']);
 
 
