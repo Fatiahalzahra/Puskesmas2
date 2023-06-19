@@ -9,9 +9,16 @@ class Dokter extends Model
 {
     use HasFactory; 
 
-    //menghubungkan model ke tabel dokters
-    protected $table = 'dokters';
+    protected $guarded = ['id'];
 
-    //menyebutkan field yang boleh diisi.
-    protected $fillable = ['nama','spesialis','telp','alamat'];
+     //menghubungkan ke model pasien 
+     // 1 dokter dapat menangani banyak pasien
+     public function pasien()
+     {
+        //karena dokter menitipkan id ke pasien 
+        //maka dokter menitipkan has + kardinalitas 
+        //kardinalitas 1 to M dari Model ini ke Model lain: hasmany
+        //1 to 1 model lain: hasOne
+        return $this-> hasMany(Pasien::class); 
+     } 
 }

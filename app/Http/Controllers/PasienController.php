@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dokter;
 use App\Models\Pasien;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,11 @@ class PasienController extends Controller
     }
 
     public function create(){
-        return view('admin.pasien.create');
+        $dokters = Dokter::all();
+        return view('admin.pasien.create', [
+            'dokters' => $dokters
+        ])
+        ;
     }
 
     public function store(Request $request){
@@ -27,6 +32,7 @@ class PasienController extends Controller
             'tgl_lahir' => 'required | date',
             'alamat' => 'required | max:500',
             'telp' => 'required | numeric | digits_between:10,14',
+            'dokter_id' => 'required',
         ]);
         
        //insert data ke tabel pasiens
@@ -36,7 +42,8 @@ class PasienController extends Controller
         'jk' =>$request->jk,
         'tgl_lahir' =>$request->tgl_lahir,
         'alamat' =>$request->alamat,
-        'telp' =>$request->telp
+        'telp' =>$request->telp,
+        'dokter_id' =>$request->dokter_id,
        ]);
 
        return redirect('/pasien');
@@ -46,8 +53,10 @@ class PasienController extends Controller
     public function edit ($id){
         $pasien = Pasien::find($id);
 
+        $dokters = Dokter::all();
         return view('admin.pasien.edit',[
-            'pasien' => $pasien
+            'pasien' => $pasien,
+            'dokters' => $dokters,
         ]);
     }
 //method untuk update pasien 
@@ -59,11 +68,13 @@ public function update($id, Request $request){
         'tgl_lahir' => 'required | date',
         'alamat' => 'required | max:500',
         'telp' => 'required | numeric | digits_between:10,14',
+        'dokter_id' => 'required',
     ]);
 
     // cari pasien yang akan di update
     $pasien = Pasien::find($id);
 
+    
     //update pasien
     $pasien->update($validatedData);
 
