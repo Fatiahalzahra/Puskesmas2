@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DokterController;
 use App\Http\Controllers\PasienController;
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -18,28 +19,23 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 |
 */
 
-//Route untuk menampilkan dashboard admin 
-Route::get('/', [DashboardController::class,'index'])->middleware('auth');
+//route untuk role admin 
+Route::group(['middleware' => ['auth', 'role:admin']], function(){
 
-// Route untuk menampilkan daftar pasien
-Route::get('/pasien', [PasienController::class, 'index'])->middleware('auth');;
-
-//Route untuk menampilkan tambah pasien
-Route::get('/pasien/create',[PasienController::class, 'create'])->middleware('auth');;
+    //Route untuk menampilkan tambah pasien
+Route::get('/pasien/create',[PasienController::class, 'create']);
 
 //Route untuk memproses form tambah pasien
-Route::post('/pasien', [PasienController::class, 'store'])->middleware('auth');
+Route::post('/pasien', [PasienController::class, 'store']);
 
 //Route untuk menampilkan form edit pasien
-Route::get('/pasien/edit/{id}',[PasienController::class,'edit'])->middleware('auth');
+Route::get('/pasien/edit/{id}',[PasienController::class,'edit']);
 
 //Rote untuk memproses form edit pasien
-Route::put('/pasien/{id}',[PasienController::class, 'update'])->middleware('auth');
+Route::put('/pasien/{id}',[PasienController::class, 'update']);
 
 //Route untuk hapus pasien
-Route::delete('pasien', [PasienController::class, 'destroy'])->middleware('auth');
-
-
+Route::delete('pasien', [PasienController::class, 'destroy']);
 
 // Route untuk menampilkan daftar dokter
 Route::get('/dokter', [DokterController::class, 'index']);
@@ -59,6 +55,18 @@ Route::put('/dokter/{id}',[DokterController::class, 'update']);
 //Route untuk hapus dokter
 Route::delete('dokter', [DokterController::class, 'destroy']);
 
+
+});
+
+//Route untuk role staff
+Route::group(['middleware' => ['auth']], function () {
+    //Route untuk menampilkan dashboard admin 
+Route::get('/', [DashboardController::class,'index']);
+
+// Route untuk menampilkan daftar pasien
+Route::get('/pasien', [PasienController::class, 'index']);
+
+});
 
 
 Auth::routes();
